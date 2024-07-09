@@ -16,15 +16,19 @@ public class Playfield : MonoBehaviour
     }
     public static bool insideBorder(Vector2 pos)
     {
-        return ((int)pos.x > 0 &&(int)pos.x < w &&(int)pos.y >= 0);
+        return ((int)pos.x >= 0 &&(int)pos.x < w &&(int)pos.y >= 0);
     }
+
     public static void deleteRow(int y)
     {
         Debug.Log("Delete ");
         for (int x = 0; x < w; ++x)
         {
-            Destroy(grid[x, y].gameObject);
-            grid[x, y] = null;
+            if (grid[x, y] != null)
+            {
+                Destroy(grid[x, y].gameObject);
+                grid[x, y] = null;
+            }
         }
     }
   
@@ -34,12 +38,12 @@ public class Playfield : MonoBehaviour
         {
             for (int x = 0; x < w; ++x)
             {
-                if (grid[x, y] != null)
+                if (grid[x, i] != null)
                 {
-                    grid[x, y - 1] = grid[x, y];
-                    grid[x, y] = null;
+                    grid[x, i - 1] = grid[x, i];
+                    grid[x, i] = null;
 
-                    grid[x, y - 1].position += new Vector3(0, -1, 0);
+                    grid[x, i - 1].position += new Vector3(0, -1, 0);
                 }
             }
         }
@@ -50,29 +54,22 @@ public class Playfield : MonoBehaviour
         {
             if (grid[x, y] == null)
             {
-       
-              //  Debug.Log("DFDSF");
                 return false;
             }
         }
-        Debug.Log("SDSF");
         return true;
     }
-    public static bool deleteFullRows() 
+    public static void deleteFullRows() 
     {
-        bool rowDeleted = false;
         for (int y = 0; y < h; ++y)
         {
             if (isRowFull(y))
             {
-              Debug.Log("ITS ME");
-                
                 deleteRow(y);
-                Debug.Log("DELET THE ROW");
                 decreaseRowsAbove(y + 1);
                 --y;
             }
         }
-        return rowDeleted;
+        
     }
 }
