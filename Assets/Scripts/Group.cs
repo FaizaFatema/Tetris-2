@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Group : MonoBehaviour
 {
+    
     float lastFall = 0;
-  
+    
     void Start()
     {
+       // Playfield.Instance.Start();
         // Default position not valid? Then it's game over
         if (!isValidGridPos())
         {
             Destroy(gameObject);
-            FindObjectOfType<GameManager>().GameOver();
-
+            // FindObjectOfType<GameManager>().GameOver();
+            GameManager.instance.GameOver();
         }
     }
    
@@ -116,11 +118,11 @@ public class Group : MonoBehaviour
                 
                 // Clear filled horizontal lines
                 Playfield.deleteFullRows();
-                
+
 
                 // Spawn next Group
-                FindObjectOfType<Spawner>().SpwanNext();
-
+                // FindObjectOfType<Spawner>().SpwanNext();
+                Spawner.Instance.SpwanNext();
                 // Disable script
                enabled = false;
             }

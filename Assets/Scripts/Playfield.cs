@@ -1,14 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class Playfield : MonoBehaviour
 {
+    public static Playfield Instance;
+
     public static int w = 10;//col
     public static int h = 20;
 
-    public static Transform[,] grid = new Transform[w,h];
+    
+    public static int score;
+   
 
+    public static Transform[,] grid = new Transform[w, h];
+
+
+    public void Start()
+    {
+        score = 0;
+        Debug.Log("FDS");
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+       
+    }
     public static Vector2 roundVec2(Vector2 v)
     {
         return new Vector2(Mathf.Round(v.x),
@@ -16,7 +33,7 @@ public class Playfield : MonoBehaviour
     }
     public static bool insideBorder(Vector2 pos)
     {
-        return ((int)pos.x >= 0 &&(int)pos.x < w &&(int)pos.y >= 0);
+        return ((int)pos.x >= 0 && (int)pos.x < w && (int)pos.y >= 0);
     }
 
     public static void deleteRow(int y)
@@ -31,10 +48,10 @@ public class Playfield : MonoBehaviour
             }
         }
     }
-  
+
     public static void decreaseRowsAbove(int y)
     {
-        for(int i = y; i < h; ++i)
+        for (int i = y; i < h; ++i)
         {
             for (int x = 0; x < w; ++x)
             {
@@ -50,7 +67,7 @@ public class Playfield : MonoBehaviour
     }
     public static bool isRowFull(int y)
     {
-        for(int x = 0; x < w; ++x)
+        for (int x = 0; x < w; ++x)
         {
             if (grid[x, y] == null)
             {
@@ -59,17 +76,40 @@ public class Playfield : MonoBehaviour
         }
         return true;
     }
-    public static void deleteFullRows() 
+    public static void deleteFullRows()
     {
+        int linesCleared = 0;
         for (int y = 0; y < h; ++y)
         {
             if (isRowFull(y))
             {
                 deleteRow(y);
+                
                 decreaseRowsAbove(y + 1);
                 --y;
+                linesCleared++;
             }
         }
-        
+        if (linesCleared > 0)
+        {
+            Playfield.score += (linesCleared-1) + 100;
+            Score.instance.UpdateScoreText();
+        }
     }
+
+    public void ClearPlayfield()
+    {
+        for (int x = 0; x < w; ++x)
+        {
+            for (int y = 0; y < h; ++y)
+            {
+                if (grid[x, y] != null)
+                {
+                    Destroy(grid[x, y].gameObject);
+                    grid[x, y] = null;
+                }
+            }
+        }
+    }
+  
 }
