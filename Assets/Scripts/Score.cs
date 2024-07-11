@@ -7,6 +7,8 @@ public class Score : MonoBehaviour
     public static Score instance;
 
     public TextMeshProUGUI text;
+    public TextMeshProUGUI highScoreText;
+
 
     // Start is called before the first frame update
     void Start()
@@ -20,10 +22,15 @@ public class Score : MonoBehaviour
             Destroy(gameObject);
         }
         UpdateScoreText();
+        UpdateHighScoreText();
     }
 
     public void UpdateScoreText()
     {
         text.text = "Score: " + Playfield.score.ToString();
+    }
+    public void UpdateHighScoreText()
+    {
+        highScoreText.text = "High Score: " + HighScoreManager.highScore.ToString();
     }
 }

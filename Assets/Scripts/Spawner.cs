@@ -17,7 +17,7 @@ public class Spawner : MonoBehaviour
         {
             Instance = this;
         }
-        SpwanNext();
+       // SpwanNext();
     }
     public void SpwanNext()
     {
