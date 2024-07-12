@@ -4,13 +4,13 @@ using UnityEngine;
 using TMPro;
 public class Playfield : MonoBehaviour
 {
-    public static Playfield Instance;
-
+    //public static Playfield Instance;
+  
     public static int w = 10;//col
     public static int h = 20;
 
     
-    public static int score;
+    public static int scoreno;
    
 
     public static Transform[,] grid = new Transform[w, h];
@@ -18,12 +18,7 @@ public class Playfield : MonoBehaviour
 
     public void Start()
     {
-        score = 0;
-        Debug.Log("FDS");
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
+        scoreno = 0;
        
     }
     public static Vector2 roundVec2(Vector2 v)
@@ -92,7 +87,7 @@ public class Playfield : MonoBehaviour
         }
         if (linesCleared > 0)
         {
-            Playfield.score += (linesCleared-1) + 100;
+            scoreno += (linesCleared-1) + 100;
             Score.instance.UpdateScoreText();
         }
     }

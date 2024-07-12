@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Group : MonoBehaviour
 {
-    
+   
     float lastFall = 0;
     
     void Start()
@@ -122,7 +122,7 @@ public class Group : MonoBehaviour
 
                 // Spawn next Group
                 // FindObjectOfType<Spawner>().SpwanNext();
-                Spawner.Instance.SpwanNext();
+                FindObjectOfType<Spawner>().SpwanNext();
                 // Disable script
                enabled = false;
             }

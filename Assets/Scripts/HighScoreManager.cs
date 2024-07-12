@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HighScoreManager : MonoBehaviour
 {
+   
     public static int highScore;
     // Start is called before the first frame update
     void Start()
@@ -19,9 +20,9 @@ public class HighScoreManager : MonoBehaviour
     public static void SaveHighScore()
     {
         // Save the high score to PlayerPrefs if current score is higher
-        if (Playfield.score > highScore)
+        if (Playfield.scoreno > highScore)
         {
-            highScore = Playfield.score;
+            highScore = Playfield.scoreno;
             PlayerPrefs.SetInt("HighScore", highScore);
             PlayerPrefs.Save(); // Save the PlayerPrefs data
         }

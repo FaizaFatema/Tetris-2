@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
+  
+    public Spawner spawner;
+  
     public GameObject gameoverpanel;
     public GameObject mainmenupanel;
    // public GameObject scorepanel;
@@ -31,7 +33,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         Time.timeScale = 1;
-        Spawner.Instance.SpwanNext();
+        spawner.SpwanNext();
     }
     public void GameOver()
     {
@@ -44,14 +46,15 @@ public class GameManager : MonoBehaviour
     {
         gameoverpanel.SetActive(false);
         Time.timeScale = 1;
-        if (Playfield.Instance != null)
-        {
-           Playfield.Instance.ClearPlayfield();
-            StartGame();
-        }
-        else
-        {
-            Debug.Log("Error");
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //if (FindObjectOfType<Playfield>() != null)
+        //{
+        //    FindObjectOfType<Playfield>().ClearPlayfield();
+        //    StartGame();
+        //}
+        //else
+        //{
+        //    Debug.Log("Error");
+        //}
     }
 }
